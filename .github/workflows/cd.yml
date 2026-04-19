@@ -1,0 +1,41 @@
+name: CD
+
+on:
+  push:
+    branches: [main]
+
+# Só roda deploy depois que o CI passar
+jobs:
+  deploy-backend:
+    name: Deploy Backend → Railway
+    runs-on: ubuntu-latest
+    needs: []   # adicione "ci / backend" quando CI estiver estável
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
+
+      - name: Deploy backend
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: railway up --service backend --detach
+        working-directory: backend
+
+  deploy-frontend:
+    name: Deploy Frontend → Railway
+    runs-on: ubuntu-latest
+    needs: []
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
+
+      - name: Deploy frontend
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: railway up --service frontend --detach
+        working-directory: frontend

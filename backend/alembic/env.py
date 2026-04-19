@@ -1,16 +1,18 @@
-import sys
 import os
+import sys
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config, pool
+
 from alembic import context
 
 # Garante que o módulo app seja encontrado
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from app.core.config import settings
-import app.models  # noqa: F401 — registra todos os models no SQLModel.metadata
 from sqlmodel import SQLModel
+
+import app.models  # noqa: F401 — registra todos os models no SQLModel.metadata
+from app.core.config import settings
 
 config = context.config
 

@@ -2,17 +2,20 @@
 Script de seed para ambiente de desenvolvimento.
 Uso: python scripts/seed.py
 """
-import sys
+
 import os
+import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from datetime import datetime
+
 from sqlmodel import Session
-from app.core.database import engine, create_db_and_tables
-from app.models.user import User, Plan
+
+from app.core.database import create_db_and_tables, engine
 from app.models.item import Item, ItemStatus, ItemType
 from app.models.quota import UsageQuota
+from app.models.user import Plan, User
 
 
 def seed():

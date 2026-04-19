@@ -1,6 +1,6 @@
 from datetime import datetime
 from enum import Enum
-from typing import Optional
+
 from sqlmodel import Field, SQLModel
 
 
@@ -22,16 +22,16 @@ class ItemStatus(str, Enum):
 class Item(SQLModel, table=True):
     __tablename__ = "items"
 
-    id: Optional[int] = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None, primary_key=True)
     user_id: int = Field(foreign_key="users.id", index=True)
     title: str
     prompt: str
     item_type: ItemType = Field(default=ItemType.clothing_2d)
     status: ItemStatus = Field(default=ItemStatus.pending)
-    job_id: Optional[str] = None
-    image_url: Optional[str] = None
-    asset_id_roblox: Optional[str] = None
-    marketplace_url: Optional[str] = None
-    error_message: Optional[str] = None
+    job_id: str | None = None
+    image_url: str | None = None
+    asset_id_roblox: str | None = None
+    marketplace_url: str | None = None
+    error_message: str | None = None
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
