@@ -4,7 +4,7 @@ Plataforma SaaS que democratiza a criação de skins e itens no Roblox para cria
 
 ## Visão Geral
 
-O Brasil é o **2º maior mercado global do Roblox** (DAUs crescendo 181% entre 2020–2024), mas ferramentas de criação são quase todas em inglês e exigem conhecimento técnico. Esta plataforma resolve esse gap: qualquer pessoa escreve o que quer criar em português e o sistema gera, valida e publica o item no Marketplace automaticamente.
+O Brasil é o **2º maior mercado global do Roblox** (DAUs crescendo 181% entre 2020–2024) e o mercado de UGC fashion movimentou **US$ 330M em 2025**, com estimativa de **US$ 25–35M/ano só no Brasil**. Ferramentas de criação são quase todas em inglês e exigem conhecimento técnico — e não existe nenhum concorrente brasileiro nesse nicho. Esta plataforma resolve esse gap: qualquer pessoa escreve o que quer criar em português e o sistema gera, valida e publica o item no Marketplace automaticamente.
 
 ```
 Usuário digita prompt em PT-BR
@@ -26,9 +26,11 @@ A plataforma opera como **curadoria**: publica os itens sob conta verificada e r
 
 | Plano | Preço | Itens 2D/mês | Itens 3D/mês | Royalties |
 |---|---|---|---|---|
-| Grátis | R$ 0 | 1 | 0 | 50% |
-| Criador | R$ 29 | 5 | 1 | 60% |
+| Explorador | R$ 0 | 1 | 0 | 50% |
+| Criador | R$ 29 | 5 | 1 | 65% |
 | Estúdio | R$ 79 | 20 | 5 | 75% |
+
+> Break-even estimado: ~80 assinantes pagos. Custo por item 2D publicado: ~R$ 1,67 (margem bruta ~71%).
 
 ## Stack Técnica
 
@@ -56,12 +58,13 @@ A plataforma opera como **curadoria**: publica os itens sob conta verificada e r
 ```
 
 **Backend:** Python 3.12, FastAPI, SQLModel, Redis, RQ  
-**Frontend:** Next.js 14, React, TypeScript, Tailwind CSS  
-**IA:** OpenAI DALL-E 3 (fase 1 — 2D), Meshy API (fase 2 — 3D)  
-**Roblox:** Open Cloud Assets API v1  
+**Frontend:** Next.js 14, React, TypeScript, Tailwind CSS — **mobile-first, PT-BR**  
+**IA:** OpenAI DALL-E 3 (fase 1 — 2D), Meshy API / Tripo3D (fase 2 — 3D)  
+**Roblox:** Open Cloud Assets API v1 + `rblx-open-cloud` wrapper  
 **Banco de Dados:** PostgreSQL  
-**Pagamentos:** Stripe + Mercado Pago (PIX)  
-**Ambiente:** Docker & Docker Compose  
+**Pagamentos:** Stripe (assinaturas) + Mercado Pago (PIX)  
+**Deploy:** Railway ou Render  
+**Ambiente local:** Docker & Docker Compose  
 
 ## Estrutura do Projeto
 
@@ -151,6 +154,14 @@ MERCADO_PAGO_ACCESS_TOKEN=APP_USR-...
 # App
 SECRET_KEY=sua-chave-secreta-aqui
 ```
+
+## Riscos e Mitigações
+
+| Risco | Mitigação |
+|---|---|
+| Roblox mudar regras de UGC | Diversificar para Fortnite Creative futuramente |
+| Alta taxa de rejeição na moderação | Curadoria automática antes do envio, meta >85% aprovação |
+| Churn de usuários | Gamificação + notificações de royalties recebidos |
 
 ## Licença
 
